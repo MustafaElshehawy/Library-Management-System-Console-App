@@ -42,6 +42,15 @@ namespace Library_Management_System
                 Console.WriteLine("\n--- Add New Book ---");
                 Console.Write("Title: ");
                 string title = Console.ReadLine();
+                for (int i = 0; i < books.Count; i++) 
+                {
+                while (books[i].Title == title) 
+                {
+                    Console.WriteLine($"Pls enter title differnt this name:{title} areardy eixits");
+                    Console.Write("Title: ");
+                    title = Console.ReadLine();
+                }
+                }
 
                 Console.Write("Author: ");
                 string author = Console.ReadLine();
@@ -51,7 +60,7 @@ namespace Library_Management_System
                 {
                     Console.Write("Is available now? (Y/N): ");
                     string input = Console.ReadLine()?.Trim().ToUpper();
-                    if (input == "Y") { isAvailable = true; break; }
+                    if (input == "Y"|| input =="YES") { isAvailable = true; break; }
                     if (input == "N") { isAvailable = false; break; }
                 }
 
@@ -69,7 +78,85 @@ namespace Library_Management_System
                 Console.WriteLine("Book added successfully!");
             }
 
-            public void RemoveBook()
+            public void UpdateBook()
+            {
+            DisplayBooks();
+            Console.Write("\nEnter book code to update: ");
+            if (!int.TryParse(Console.ReadLine(), out int code))
+            {
+                Console.WriteLine("Pls enter valid code.");
+                return;
+            }
+
+            Book book = GetBookByCode(code);
+            if (book == null)
+            {
+                Console.WriteLine("Book not found.");
+                return;
+            }
+
+            Console.WriteLine("\nUpdate Old Book values ");
+            Console.Write($"Title ({book.Title}): ");
+           
+            string titleInput = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(titleInput))
+            {
+                for (int i = 0; i < books.Count; i++)
+                {
+                    while (books[i].Title == titleInput)
+                    {
+                        Console.WriteLine($"Pls enter title differnt this name:{titleInput} areardy eixits");
+                        Console.Write("Title: ");
+                        titleInput = Console.ReadLine();
+                    }
+                    book.Title = titleInput;
+
+                }
+            }
+
+            Console.Write($"Auther ({book.Author})");
+            string authorInput = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(authorInput))
+                book.Author = authorInput;
+
+            Console.Write($"Is available now? (Y/N) [{(book.IsAvailable ? "Y" : "N")}]: ");
+            string input = Console.ReadLine()?.Trim().ToUpper();
+
+            if (input == "Y" || input == "YES" || input == "NO" || input == "N")
+            {
+                if (input == "Y" || input == "YES")
+                {
+                    book.IsAvailable = true;
+                    book.AvailableOn = null;
+
+                }
+
+                if (input == "N" || input == "NO")
+                {
+                    book.IsAvailable = false;
+                    Console.Write("Available from date (yyyy-mm-dd): ");
+                    if (DateTime.TryParse(Console.ReadLine(), out DateTime date))
+                    {
+                        book.AvailableOn = date;
+                    }
+                }
+                Console.WriteLine("Book updated successfully!");
+
+
+            }
+            else
+            {
+                Console.WriteLine("Please enter Y or YES or N or NO.");
+
+            }
+
+
+
+
+        }
+
+
+        public void RemoveBook()
             {
                 DisplayBooks();
                 Console.Write("Enter code to remove: ");

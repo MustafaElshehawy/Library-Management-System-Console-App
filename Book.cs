@@ -14,6 +14,8 @@ namespace Library_Management_System
         public bool IsAvailable { get; set; }
         public DateTime? AvailableOn { get; set; }
 
+        
+
         public Book(int code, string title, string author, bool isAvailable, DateTime? availableOn = null)
         {
             Code = code;
@@ -27,6 +29,7 @@ namespace Library_Management_System
         {
             IsAvailable = false;
             AvailableOn = DateTime.Today.AddDays(days);
+            
         }
 
         public void Return()

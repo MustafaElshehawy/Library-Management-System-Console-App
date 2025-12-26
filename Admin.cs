@@ -17,6 +17,7 @@ namespace Library_Management_System
                 Console.WriteLine("1. View Books");
                 Console.WriteLine("2. Add Book");
                 Console.WriteLine("3. Remove Book");
+                Console.WriteLine("4. Update Book");
                 Console.WriteLine("0. Logout");
                 Console.Write("Select: ");
 
@@ -33,6 +34,10 @@ namespace Library_Management_System
                         break;
                     case "3":
                         library.RemoveBook();
+                        Pause();
+                        break;
+                    case "4":
+                        library.UpdateBook();
                         Pause();
                         break;
                     case "0":

@@ -48,27 +48,35 @@ namespace Library_Management_System
         private void BorrowProcess(Library library)
         {
             library.DisplayBooks();
+            checkcode:
             Console.Write("\nEnter book code to borrow: ");
             if (int.TryParse(Console.ReadLine(), out int code))
             {
                 Book book = library.GetBookByCode(code);
                 if (book != null && book.IsAvailable)
                 {
-                    Console.Write("Enter days (1-14): ");
+                    Console.Write("Enter days : ");
+
                     if (int.TryParse(Console.ReadLine(), out int days) && days > 0 && days <= 14)
                     {
                         book.Borrow(days);
-                        Console.WriteLine($"Borrowed '{book.Title}' for {days} days.");
+                        Console.Write($"Borrowed '{book.Title}' for {days} days.");
+                        Console.WriteLine($"Cost :{days * 1} $");
                     }
                     else
                     {
-                        Console.WriteLine("Invalid days.");
+                        Console.WriteLine("Pls enter range 1 to 14  days.");
                     }
                 }
                 else
                 {
                     Console.WriteLine("Book not found or unavailable.");
                 }
+            }
+            else 
+            { 
+                Console.WriteLine("Pls enter right code from list show up"); 
+                goto checkcode;
             }
         }
 
